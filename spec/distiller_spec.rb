@@ -16,7 +16,7 @@ describe Distiller do
         subject.size.should eq(12)
       end
 
-      context "when no root note is specified" do
+      context "for default options" do
         it "has rows that contain start time and note number" do
           subject[0].should eq([0, 71])
           subject[1].should eq([48, 61])
@@ -29,6 +29,15 @@ describe Distiller do
         it "has rows that contain start time and offset from root" do
           subject[0].should eq([0, 11])
           subject[1].should eq([48, 1])
+        end
+      end
+
+      context "when ticks_per_unit is specified" do
+        let(:options) { { ticks_per_unit: 24 } }
+
+        it "converts start times correctly" do
+          subject[0][0].should eq(0)
+          subject[1][0].should eq(2)
         end
       end
     end
